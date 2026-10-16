@@ -1,0 +1,21 @@
+const assert=require('node:assert/strict');
+const {t,B}=require('./harness.cjs')();
+const {types,modes,totalEnemies}=require('../dist/encounters.js');
+assert.equal(totalEnemies(modes.normal),18);assert.equal(totalEnemies(modes.oni),24);
+assert.ok(modes.normal.waves[1].includes('shogun'));assert.ok(modes.normal.waves[2].includes('oni'));
+function reset(mode='normal'){t.setState('intro');t.selectMode(mode);t.restart();t.clear();t.camera.position.set(0,1.85,-5);}
+function matrices(){t.scene.meshes.forEach(m=>m.computeWorldMatrix(true));}
+reset();const riders=t.enemy(0,3,'cavalry');matrices();assert.equal(riders.hp,220);assert.ok(riders.root.getChildMeshes().some(m=>m.name==='horse head'));assert.ok(riders.root.getChildMeshes().every(m=>m.metadata.enemy===riders));riders.attack=0;t.updateEnemy(riders,.01);assert.equal(riders.action,'windup');t.updateEnemy(riders,.86);assert.equal(riders.action,'charge');t.camera.position.x=4;for(let i=0;i<30;i++)t.updateEnemy(riders,.05);assert.equal(t.hp,100);assert.ok(Math.abs(riders.root.position.x)<.01);
+reset();const charger=t.enemy(0,3,'cavalry');charger.attack=0;t.updateEnemy(charger,.01);t.updateEnemy(charger,.86);for(let i=0;i<30;i++)t.updateEnemy(charger,.05);assert.equal(t.hp,72);
+reset();t.camera.position.z=-2.8;const general=t.enemy(0,0,'shogun');general.attack=0;matrices();t.updateEnemy(general,.01);assert.equal(general.action,'windup');assert.ok(general.warning);t.updateEnemy(general,.66);assert.equal(t.hp,76);assert.equal(general.action,'combo');t.updateEnemy(general,.41);assert.equal(t.hp,52);assert.equal(general.action,'recover');
+reset();const oni=t.enemy(0,0,'oni');oni.attack=0;matrices();t.updateEnemy(oni,.01);assert.equal(oni.action,'windup');assert.ok(oni.warning);t.camera.position.z=-8;t.updateEnemy(oni,1.26);assert.equal(t.hp,100);oni.hp=oni.maxHp/2;t.updateEnemy(oni,.01);assert.equal(oni.rage,true);
+reset();const slam=t.enemy(0,0,'oni');slam.attack=0;matrices();t.updateEnemy(slam,.01);t.updateEnemy(slam,1.26);assert.equal(t.hp,64);
+// Training includes all types, no attacks or self damage, and replacement targets.
+t.setState('intro');t.selectMode('training');t.restart();assert.equal(t.enemies.length,5);assert.deepEqual([...new Set(t.enemies.map(e=>e.kind))].sort(),Object.keys(types).sort());const trainingPositions=t.enemies.map(e=>e.root.position.clone());for(let i=0;i<10;i++)t.update(.05);t.enemies.forEach((e,i)=>assert.ok(B.Vector3.Distance(e.root.position,trainingPositions[i])<.001));t.damage(500);t.damage(500,false);assert.equal(t.hp,100);const target=t.enemies[0];t.hurtEnemy(target,100000,target.root.position);for(let i=0;i<80;i++)t.update(.05);assert.equal(t.enemies.filter(e=>!e.dead).length,5);assert.equal(t.kills,1);assert.equal(t.wave,0);assert.equal(t.state,'playing');
+// Every wave advances once, heals according to the mode, and the final boss gates victory.
+t.setState('intro');t.selectMode('normal');t.restart();assert.equal(t.enemies.length,5);t.damage(40);function defeatWave(){for(const e of t.enemies)t.hurtEnemy(e,100000,e.root.position);for(let i=0;i<55;i++)t.update(.05);}
+defeatWave();assert.equal(t.wave,2);assert.equal(t.hp,85);assert.equal(t.enemies.filter(e=>!e.dead).length,6);assert.ok(t.enemies.some(e=>e.kind==='shogun'));defeatWave();assert.equal(t.wave,3);assert.ok(t.enemies.some(e=>e.kind==='oni'));defeatWave();assert.equal(t.state,'won');assert.equal(t.kills,18);assert.equal(t.wave,3);
+t.setState('intro');t.selectMode('oni');t.restart();assert.equal(t.enemies.length,8);assert.equal(t.enemies.find(e=>e.kind==='samurai').maxHp,150);t.damage(10);assert.equal(t.hp,85);t.damage(10,false);assert.equal(t.hp,75);defeatWave();assert.equal(t.wave,2);assert.equal(t.hp,75);assert.equal(t.enemies.find(e=>e.kind==='shogun').maxHp,900);
+// Returning to selection clears the fight and allows a new mode without stale keys/timers.
+t.returnToTitle();assert.equal(t.state,'intro');t.selectMode('training');t.restart();assert.equal(t.mode,'training');assert.equal(t.hp,100);assert.equal(t.wave,0);t.modal('pause');assert.equal(t.state,'paused');const pos=t.enemies[0].root.position.clone();t.update(1);assert.ok(B.Vector3.Distance(pos,t.enemies[0].root.position)<.001);
+t.scene.dispose();console.log('Encounters: charge dodge/hit, double slash, slam/rage, training respawn, full campaign victory and difficulty scaling passed.');

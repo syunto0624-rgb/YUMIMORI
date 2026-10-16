@@ -1,0 +1,17 @@
+const assert=require('node:assert/strict');
+const {weapons:w,hitDamage,blastDamage}=require('../dist/weapons.js');
+assert.equal(w.length,4);
+assert.equal(hitDamage(w[0],{charge:1}),83);
+assert.equal(hitDamage(w[0],{charge:.18}),46.1);
+assert.equal(hitDamage(w[0],{head:true}),150);
+assert.equal(hitDamage(w[1],{}),160);
+assert.equal(hitDamage(w[1],{hitIndex:1}),112);
+assert.ok(Math.abs(hitDamage(w[1],{hitIndex:2})-78.4)<1e-9);
+assert.equal(hitDamage(w[1],{head:true}),240);
+assert.equal(hitDamage(w[2],{samurai:true}),18.2);
+assert.equal(hitDamage(w[2],{samurai:true,head:true}),56);
+assert.equal(blastDamage(w[3],0),130);
+assert.equal(blastDamage(w[3],2.75),82.5);
+assert.equal(blastDamage(w[3],5.5),35);
+assert.equal(blastDamage(w[3],5.51),0);
+console.log('Combat balance: 14 checks passed.');
