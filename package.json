@@ -6,6 +6,6 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "python3 -m http.server 8080 --bind 127.0.0.1 --directory dist",
-    "test": "node --check dist/game.js && node --check dist/encounters.js && node --check dist/weapons.js && node tests/combat.cjs && node tests/projectiles.cjs && node tests/encounters.cjs"
+    "test": "node --check dist/game.js && node --check dist/encounters.js && node --check dist/weapons.js && node tests/combat.cjs && node tests/projectiles.cjs && node tests/encounters.cjs && node --check dist/characters.js && node --check dist/character-viewer.js && node tests/characters.cjs && node --check dist/campaign.js && node --check dist/stages.js && node tests/campaign.cjs"
   }
 }

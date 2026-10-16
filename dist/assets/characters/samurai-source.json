@@ -1,0 +1,15 @@
+{
+  "slug": "samurai",
+  "license": "CC0-1.0",
+  "page": "https://grab3d.com/models/characters/samurai/",
+  "origin": {
+    "method": "ai-assisted",
+    "aiContent": true,
+    "aiAssistedCode": null,
+    "detail": "Base mesh and textures generated with an AI image-to-3D tool (Meshy), then cleaned up, scaled, textured and checked in Blender. Skeleton, skinning and the walk and run clips were added automatically with Meshy Auto-Rig. Finger bones and a relaxed hand pose were added in Blender.",
+    "licenseUrl": "https://grab3d.com/dl/samurai-rigged/LICENSE.txt",
+    "manifestUrl": "https://grab3d.com/dl/samurai-rigged/manifest.json"
+  },
+  "source": "https://grab3d.com/dl/samurai-rigged/samurai-rigged.glb",
+  "modifications": "Simplified geometry and resized embedded textures for browser use."
+}

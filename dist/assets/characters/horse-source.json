@@ -1,0 +1,15 @@
+{
+  "slug": "horse",
+  "license": "CC0-1.0",
+  "page": "https://grab3d.com/models/animals/horse/",
+  "origin": {
+    "method": "ai-assisted",
+    "aiContent": true,
+    "aiAssistedCode": null,
+    "detail": "Base mesh and textures generated with an AI image-to-3D tool (Meshy), then cleaned up, scaled, textured and checked in Blender.",
+    "licenseUrl": "https://grab3d.com/dl/horse/LICENSE.txt",
+    "manifestUrl": "https://grab3d.com/dl/horse/manifest.json"
+  },
+  "source": "https://grab3d.com/dl/horse/horse-light.glb",
+  "modifications": "Simplified geometry and resized embedded textures for browser use."
+}

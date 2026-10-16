@@ -2,7 +2,7 @@ const assert=require('node:assert/strict');
 const {t,win,ctx,elements,B}=require('./harness.cjs')();
 function setup(index){t.clear();t.setState('playing');t.camera.position.set(0,1.3,-5);t.camera.rotation.set(0,0,0);t.selectWeapon(index);t.cooldowns.fill(0);}
 function matrices(){t.scene.meshes.forEach(m=>m.computeWorldMatrix(true));t.camera.computeWorldMatrix(true);}
-setup(1);const targets=[0,2,4,6].map(z=>t.enemy(0,z,true));matrices();assert.equal(t.shoot(),true);t.advanceProjectile(t.arrows[0],.05);assert.equal(targets[0].dead,true);assert.equal(targets[1].dead,true);assert.ok(Math.abs(targets[2].hp-21.6)<.01);assert.equal(targets[3].hp,100);assert.equal(t.arrows[0].hitEnemies.size,3);
+setup(1);const targets=[0,2,4,6].map(z=>t.enemy(0,z,true));targets.forEach(e=>e.root.getChildMeshes().forEach(m=>m.visibility=0));matrices();assert.equal(t.shoot(),true);t.advanceProjectile(t.arrows[0],.05);assert.equal(targets[0].dead,true);assert.equal(targets[1].dead,true);assert.ok(Math.abs(targets[2].hp-21.6)<.01);assert.equal(targets[3].hp,100);assert.equal(t.arrows[0].hitEnemies.size,3);
 // Switching away and back must never erase the matchlock's reload.
 t.selectWeapon(2);assert.equal(t.shoot(),true);t.selectWeapon(1);assert.equal(t.shoot(),false);assert.equal(t.cooldowns[1],3.6);
 // A solid wall terminates a penetrating shot before an enemy behind it.

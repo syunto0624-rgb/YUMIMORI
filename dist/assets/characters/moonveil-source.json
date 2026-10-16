@@ -1,0 +1,12 @@
+{
+  "creator": "KashiroZen",
+  "pack": "Moonveil Oni - 4 Textured Characters with Walk Cycles",
+  "url": "https://kashirozen.itch.io/kashirozen-moonveil-cinder-oni",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "used": [
+    "Cinder Oni AWAKENED"
+  ],
+  "origin": "AI-assisted base meshes, prepared, textured and rigged by KashiroZen",
+  "modifications": "Renamed local files; integrated animation and game scale."
+}
