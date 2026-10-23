@@ -8,6 +8,16 @@ Babylon.jsで制作した、江戸時代をテーマにしたブラウザ向け�
 
 [デプロイ済みゲームを開く](https://edo-yumimori.richgnome1024.chatgpt.site/) — 現在の公開先は所有者限定です。許可されたChatGPTアカウントでのログインが必要です。
 
+## プロモーションビデオ
+
+[![弓守 — 江戸の残照 プロモーションビデオ](docs/promotion/poster.jpg)](docs/promotion/YUMIMORI_Promotion_120s.mp4)
+
+**[動画を開く（MP4 / 2分 / 1080p）](docs/promotion/YUMIMORI_Promotion_120s.mp4)** · [ダウンロード](https://github.com/syunto0624-rgb/YUMIMORI/raw/refs/heads/main/docs/promotion/YUMIMORI_Promotion_120s.mp4) · [日本語字幕（SRT）](docs/promotion/subtitles.ja.srt)
+
+日本語字幕・効果音・オリジナルBGM付き。一本の弓から兵器を解放し、騎馬兵・将軍・赤鬼へ挑む物語を、ゲーム内映像で紹介します。武器の威力・連射・貫通・爆発の特徴も収録しています。
+
+素材の出典と映像の詳細は [映像クレジット](docs/promotion/credits.md) を参照してください。
+
 ## ローカルで遊ぶ
 
 WebGL対応のデスクトップブラウザと、マウス・キーボードを使用してください。配信にはPython 3、テストにはNode.js 18以降を使用します。
